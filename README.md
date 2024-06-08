@@ -158,13 +158,13 @@ O aplicativo utiliza três famílias de fontes importadas do Google Fonts:
 3.  **Open Sans**
 
 Os URLs de importação são:
-
-`@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+```css
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");` 
-
+```
 ## Reset de Estilos
 
 Para garantir a consistência dos estilos, as margens e os preenchimentos são zerados para os seguintes elementos:
