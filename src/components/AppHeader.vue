@@ -1,32 +1,20 @@
 <template>
-  <header :class="['app-header', { mobile: isMobile }]">
+  <header class="app-header">
     <div class="logo-container">
-      <img src="@/assets/svg/logo-grupo-primo.svg" alt="Logo" class="logo" />
+      <img :src="logo" alt="Logo" class="logo" />
     </div>
   </header>
 </template>
 
 <script>
+import logo from "@/assets/svg/logo-grupo-primo.svg";
+
 export default {
   name: "AppHeader",
   data() {
     return {
-      isMobile: false,
-      resizeListener: null,
+      logo,
     };
-  },
-  mounted() {
-    this.checkMobile();
-    this.resizeListener = this.checkMobile;
-    window.addEventListener("resize", this.resizeListener);
-  },
-  beforeUnmount() {
-    window.removeEventListener("resize", this.resizeListener);
-  },
-  methods: {
-    checkMobile() {
-      this.isMobile = window.innerWidth <= 500;
-    },
   },
 };
 </script>
@@ -38,7 +26,7 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: #f8f8f8;
+  background-color: var(--main-bg-color);
   padding: 32px 0 32px 120px;
 }
 
@@ -54,11 +42,14 @@ export default {
   height: auto;
 }
 
-.app-header.mobile {
-  height: 66px;
-}
+@media screen and (max-width: 500px) {
+  .app-header {
+    height: 24px;
+    padding: 32px;
+  }
 
-.app-header.mobile {
-  padding: 32px;
+  .app-header .logo {
+    max-height: 22px;
+  }
 }
 </style>
