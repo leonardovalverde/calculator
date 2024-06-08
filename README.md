@@ -159,21 +159,15 @@ O aplicativo utiliza três famílias de fontes importadas do Google Fonts:
 
 Os URLs de importação são:
 
-css
-
-Copiar código
-
 `@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");` 
 
 ## Reset de Estilos
 
 Para garantir a consistência dos estilos, as margens e os preenchimentos são zerados para os seguintes elementos:
-
-css
-
-Copiar código
 
 `body,
 h1,
@@ -234,9 +228,6 @@ As variáveis são definidas na pseudo-classe `:root` para estarem disponíveis 
 ## Utilização das Variáveis
 
 Para usar essas variáveis em seu CSS, basta referenciá-las com a função `var()`. Por exemplo:
-
-css
-
 
 ```css
 `body {
