@@ -12,7 +12,7 @@
         <RangeSlider
           id="slider1"
           :label="'Quanto gostaria de investir?'"
-          v-model="slider1"
+          v-model="initialBudget"
           :min="100"
           :max="10000"
           :step="100"
@@ -21,7 +21,7 @@
         <RangeSlider
           id="slider2"
           :label="'Por mês, quanto investiria?'"
-          v-model="slider2"
+          v-model="monthlyBudget"
           :min="100"
           :max="10000"
           :step="100"
@@ -30,7 +30,7 @@
         <RangeSlider
           id="slider3"
           :label="'Por quantos meses deixaria seu dinheiro investido?'"
-          v-model="slider3"
+          v-model="monthsToInvest"
           :min="1"
           :max="60"
           :step="1"
@@ -40,17 +40,17 @@
       <div class="grid-center"></div>
       <div class="grid-right">
         <p class="grid-right-title">Em 24 meses você teria:</p>
-        <MoneyCard :amount="slider4" title="Taxa Selic" />
+        <MoneyCard :amount="selicResult" title="Taxa Selic" />
         <MoneyCard
-          :amount="slider5"
+          :amount="arcaResult"
           title="Fundo Arca"
           :imageUrl="require('@/assets/svg/logo-arca.svg')"
         />
         <ColoredDivider color="#33E5B0" />
         <RentabilityInfo
-          :taxa-selic="taxaSelic"
-          :rentabilidade-arca="rentabilidadeArca"
-          :data-atualizacao="dataAtualizacao"
+          :taxa-selic="selicFare"
+          :rentabilidade-arca="arcaFare"
+          :data-atualizacao="updatedData"
         />
       </div>
     </div>
@@ -66,58 +66,53 @@ import MoneyCard from "../components/MoneyCard.vue";
 import ColoredDivider from "../components/ColoredDivider.vue";
 import RentabilityInfo from "../components/RentabilityInfo.vue";
 
-const slider1 = ref(100);
-const slider2 = ref(1000);
-const slider3 = ref(12);
-const slider4 = ref(0);
-const slider5 = ref(0);
+const initialBudget = ref(100);
+const monthlyBudget = ref(1000);
+const monthsToInvest = ref(12);
+const selicResult = ref(0);
+const arcaResult = ref(0);
 
-const taxaSelic = ref("9,25%");
-const rentabilidadeArca = ref("18% a.a.");
-const dataAtual = new Date();
-const dataAtualizacao = ref(
-  `${String(dataAtual.getDate()).padStart(2, "0")}/${String(
-    dataAtual.getMonth() + 1
-  ).padStart(2, "0")}/${dataAtual.getFullYear()}`
+const selicFare = ref("9,25%");
+const arcaFare = ref("18% a.a.");
+const currentDate = new Date();
+const updatedData = ref(
+  `${String(currentDate.getDate()).padStart(2, "0")}/${String(
+    currentDate.getMonth() + 1
+  ).padStart(2, "0")}/${currentDate.getFullYear()}`
 );
 
-const calcularRentabilidade = (): void => {
-  // Parâmetros
-  const principal = slider1.value;
-  const dinheiroMensal = slider2.value;
-  const taxaSelicAnual = 9.25 / 100;
-  const taxaArcaAnual = 18 / 100;
-  const prazoMeses = slider3.value; // Prazo em meses
-  const diasNoMes = 252 / 12; // Aproximado
+const calculateProfitability = (): void => {
+  const investmentAmount = initialBudget.value;
+  const monthlyIncome = monthlyBudget.value;
+  const annualSelicRate = 9.25 / 100;
+  const annualArchRate = 18 / 100;
+  const investmentPeriodMonths = monthsToInvest.value;
+  const approximateDaysPerMonth = 252 / 12;
 
-  // Convertendo taxa anual para diária
-  const taxaSelicDiaria = Math.pow(1 + taxaSelicAnual, 1 / 252) - 1;
-  const taxaArcaDiaria = Math.pow(1 + taxaArcaAnual, 1 / 252) - 1;
-  const prazoDias = prazoMeses * diasNoMes; // Convertendo prazo para dias
+  const dailySelicRate = Math.pow(1 + annualSelicRate, 1 / 252) - 1;
+  const dailyArchRate = Math.pow(1 + annualArchRate, 1 / 252) - 1;
+  const prazoDias = investmentPeriodMonths * approximateDaysPerMonth;
 
-  // Cálculo da rentabilidade para Selic
-  let montanteSelic = principal;
+  let selicInvestmentAmount = investmentAmount;
   for (let i = 0; i < prazoDias; i++) {
-    montanteSelic *= 1 + taxaSelicDiaria;
-    montanteSelic += dinheiroMensal / diasNoMes; // Adicionando o investimento diário
+    selicInvestmentAmount *= 1 + dailySelicRate;
+    selicInvestmentAmount += monthlyIncome / approximateDaysPerMonth;
   }
 
-  // Cálculo da rentabilidade para Arca
-  let montanteArca = principal;
+  let archInvestmentAmount = investmentAmount;
   for (let i = 0; i < prazoDias; i++) {
-    montanteArca *= 1 + taxaArcaDiaria;
-    montanteArca += dinheiroMensal / diasNoMes; // Adicionando o investimento diário
+    archInvestmentAmount *= 1 + dailyArchRate;
+    archInvestmentAmount += monthlyIncome / approximateDaysPerMonth;
   }
 
-  // Atualizar os valores dos MoneyCards
-  slider4.value = montanteSelic;
-  slider5.value = montanteArca;
+  selicResult.value = selicInvestmentAmount;
+  arcaResult.value = archInvestmentAmount;
 };
 
-calcularRentabilidade();
-// Assistir a alterações nos sliders e chamar o método de cálculo
-watch([slider1, slider2, slider3], () => {
-  calcularRentabilidade();
+calculateProfitability();
+
+watch([initialBudget, monthlyBudget, monthsToInvest], () => {
+  calculateProfitability();
 });
 </script>
 
