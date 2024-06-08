@@ -5,6 +5,7 @@
       :src="imageUrl"
       alt="Money Card Image"
       class="money-card-image"
+      loading="lazy"
     />
     <div class="money-card-content">
       <h3 class="money-card-title">{{ title }}</h3>
@@ -48,10 +49,11 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #bfbdb6;
+  font-family: var(--font-family-main);
+  border: 1px solid var(--boder-color);
   border-radius: 24px;
   padding: 32px;
-  background-color: #f9f9f9;
+  background-color: var(--main-bg-color);
   margin-bottom: 16px;
 }
 
@@ -61,16 +63,16 @@ export default {
 
 .money-card-title {
   margin-bottom: 10px;
-  font-size: 16px; /* Tamanho da fonte responsiva */
-  color: #595855;
+  font-size: 16px;
+  color: var(--font-color);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 3px;
 }
 
 .money-card-amount {
-  font-size: 3vw; /* Tamanho da fonte responsiva */
+  font-size: 3vw;
   font-weight: bold;
-  color: #21211f;
+  color: var(--secondary-font-color);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -80,5 +82,14 @@ export default {
   margin-bottom: 16px;
   max-width: 100%;
   max-height: 33px;
+}
+
+@media (max-width: 500px) {
+  .money-card-title {
+    font-size: 14px;
+  }
+  .money-card-amount {
+    font-size: 40px;
+  }
 }
 </style>
