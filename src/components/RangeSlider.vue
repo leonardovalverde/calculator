@@ -1,11 +1,5 @@
 <template>
-  <div
-    class="slider-container"
-    :style="{
-      marginTop: sliderMargins.marginTop,
-      marginBottom: sliderMargins.marginBottom,
-    }"
-  >
+  <div class="slider-container">
     <label class="slider-label">{{ label }}</label>
     <input
       type="range"
@@ -17,7 +11,7 @@
       class="styled-slider"
       ref="range"
     />
-    <span class="slider-value">{{ sliderValue }}</span>
+    <span class="slider-value">{{ formattedValue }}</span>
   </div>
 </template>
 
@@ -25,6 +19,10 @@
 export default {
   name: "RangeSlider",
   props: {
+    type: {
+      type: String,
+      default: "currency",
+    },
     min: {
       type: Number,
       default: 0,
@@ -45,10 +43,6 @@ export default {
       type: String,
       default: "Label",
     },
-    sliderMargins: {
-      type: Object,
-      default: () => ({ marginTop: 0, marginBottom: 0 }),
-    },
   },
   data() {
     return {
@@ -60,20 +54,34 @@ export default {
       this.sliderValue = newValue;
       this.updateSliderBackground();
     },
-    sliderValue() {
+    sliderValue(newValue) {
+      this.$emit("update:modelValue", Number(newValue));
       this.updateSliderBackground();
     },
   },
   methods: {
-    updateValue() {
-      this.$emit("update:modelValue", this.sliderValue);
-      this.updateSliderBackground();
-    },
     updateSliderBackground() {
       const range = this.$refs.range;
       const percentage =
         ((this.sliderValue - this.min) / (this.max - this.min)) * 100;
       range.style.background = `linear-gradient(to right, #54D4A0 ${percentage}%, #ddd ${percentage}%)`;
+    },
+  },
+  computed: {
+    formattedValue() {
+      switch (this.type) {
+        case "currency":
+          return new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(this.sliderValue);
+        case "month":
+          return `${this.sliderValue} ${
+            this.sliderValue > 1 ? "meses" : "mês"
+          }`;
+        default:
+          return this.sliderValue;
+      }
     },
   },
   mounted() {
@@ -87,13 +95,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 80px;
 }
 
 .slider-label {
   align-self: flex-start;
   margin-bottom: 36px;
   font-size: 32px;
-  color: #21211f;
+  color: var(--font-color);
+  font-weight: 600;
 }
 
 .styled-slider {
@@ -101,7 +111,7 @@ export default {
   appearance: none;
   width: 100%;
   height: 12px;
-  background: #ddd;
+  background: var(--secondary-bg-color);
   outline: none;
   border-radius: 12px;
   position: relative;
@@ -127,7 +137,7 @@ export default {
   appearance: none;
   width: 39.7px;
   height: 39.7px;
-  background: #54D4A0;
+  background: var(--medium-aqua-marine);
   cursor: pointer;
   border-radius: 50%;
   border: none;
@@ -139,7 +149,7 @@ export default {
 .styled-slider::-moz-range-thumb {
   width: 39.7px;
   height: 39.7px;
-  background: #54D4A0;
+  background: var(--medium-aqua-marine);
   cursor: pointer;
   border-radius: 50%;
   border: none;
@@ -153,6 +163,23 @@ export default {
   width: 100%;
   font-size: 48px;
   font-weight: bold;
-  color: #0d0d0d;
+  color: var(--secondary-font-color);
+  font-family: var(--font-family-main);
+}
+
+@media (max-width: 500px) {
+  .slider-container {
+    margin-bottom: 48px;
+  }
+
+  .slider-label {
+    font-size: 20px;
+    margin-bottom: 32px;
+  }
+
+  .slider-value {
+    margin-top: 32px;
+    font-size: 32px;
+  }
 }
 </style>
