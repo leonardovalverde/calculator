@@ -1,5 +1,5 @@
 <template>
-  <div :style="dividerStyle"></div>
+  <div class="divider" :style="dynamicStyles"></div>
 </template>
 
 <script>
@@ -12,14 +12,19 @@ export default {
     },
   },
   computed: {
-    dividerStyle() {
+    dynamicStyles() {
       return {
-        height: "6px",
         backgroundColor: this.color,
-        margin: "48px 0",
-        borderRadius: "25px",
       };
     },
   },
 };
 </script>
+
+<style scoped>
+.divider {
+  height: 6px;
+  margin: 48px 0;
+  border-radius: 25px;
+}
+</style>
