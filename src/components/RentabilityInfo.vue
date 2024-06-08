@@ -3,11 +3,11 @@
     <div class="rentability-container">
       <div class="rentability">
         <span> Taxa Selic: </span>
-        <strong>{{ taxaSelic }}</strong>
+        <strong>{{ selicRate }}</strong>
       </div>
       <div>
         <span> Rentabilidade do Arca: </span>
-        <strong>{{ rentabilidadeArca }}</strong>
+        <strong>{{ archRate }}</strong>
       </div>
     </div>
     <div class="info-text-container">
@@ -18,7 +18,7 @@
           última atualização - esses valores podem alterar de acordo com o
           mercado):
         </p>
-        <p>- Data da última atualização: {{ dataAtualizacao }}</p>
+        <p>- Data da última atualização: {{ lastUpdatedDate }}</p>
       </div>
     </div>
   </div>
@@ -27,9 +27,9 @@
 <script>
 export default {
   props: {
-    taxaSelic: String,
-    rentabilidadeArca: String,
-    dataAtualizacao: String,
+    selicRate: String,
+    archRate: String,
+    lastUpdatedDate: String,
   },
 };
 </script>

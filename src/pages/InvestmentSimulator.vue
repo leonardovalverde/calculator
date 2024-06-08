@@ -48,9 +48,9 @@
         />
         <ColoredDivider color="#33E5B0" />
         <RentabilityInfo
-          :taxa-selic="selicFare"
-          :rentabilidade-arca="arcaFare"
-          :data-atualizacao="updatedData"
+          :selic-rate="selicFare"
+          :arch-rate="arcaFare"
+          :lastUpdated-date="updatedData"
         />
       </div>
     </div>
