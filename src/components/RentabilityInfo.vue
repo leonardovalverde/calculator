@@ -2,12 +2,12 @@
   <div class="info-box">
     <div class="rentability-container">
       <div class="rentability">
-        <span> Taxa Selic: </span>
-        <strong>{{ selicRate }}</strong>
+        <span class="span"> Taxa Selic: </span>
+        <strong class="strong">{{ selicRate }}</strong>
       </div>
       <div>
-        <span> Rentabilidade do Arca: </span>
-        <strong>{{ archRate }}</strong>
+        <span class="span"> Rentabilidade do Arca: </span>
+        <strong class="strong">{{ archRate }}</strong>
       </div>
     </div>
     <div class="info-text-container">
@@ -35,24 +35,20 @@ export default {
 </script>
 
 <style scoped>
-.info-box {
-  strong {
-    font-family: var(--font-family-tertiary);
-    color: black;
-    white-space: nowrap;
-    font-size: 18px;
-    font-weight: 800;
-    text-transform: initial;
-  }
+.strong {
+  font-family: var(--font-family-tertiary);
+  color: black;
+  white-space: nowrap;
+  font-size: 18px;
+  font-weight: 800;
+  text-transform: initial;
 }
 
-.rentability-container {
-  span {
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: var(--font-color);
-  }
+.span {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--font-color);
 }
 
 .rentability {
@@ -62,7 +58,7 @@ export default {
 .info-text-container {
   font-family: var(--font-family-main);
   display: flex;
-  margin:49px 0 24px 0;
+  margin: 49px 0 24px 0;
   align-items: start;
 }
 

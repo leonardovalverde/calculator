@@ -39,7 +39,7 @@
       </div>
       <div class="grid-center"></div>
       <div class="grid-right">
-        <p class="grid-right-title">Em 24 meses você teria:</p>
+        <p class="grid-right-title">Em {{ monthsToInvest }} meses você teria:</p>
         <MoneyCard :amount="selicResult" title="Taxa Selic" />
         <MoneyCard
           :amount="arcaResult"
