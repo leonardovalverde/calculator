@@ -39,7 +39,9 @@
       </div>
       <div class="grid-center"></div>
       <div class="grid-right">
-        <p class="grid-right-title">Em {{ monthsToInvest }} meses você teria:</p>
+        <p class="grid-right-title">
+          Em {{ monthsToInvest }} meses você teria:
+        </p>
         <MoneyCard :amount="selicResult" title="Taxa Selic" />
         <MoneyCard
           :amount="arcaResult"
@@ -96,13 +98,17 @@ const calculateProfitability = (): void => {
   let selicInvestmentAmount = investmentAmount;
   for (let i = 0; i < prazoDias; i++) {
     selicInvestmentAmount *= 1 + dailySelicRate;
-    selicInvestmentAmount += monthlyIncome / approximateDaysPerMonth;
+    if ((i + 1) % approximateDaysPerMonth === 0) {
+      selicInvestmentAmount += monthlyIncome;
+    }
   }
 
   let archInvestmentAmount = investmentAmount;
   for (let i = 0; i < prazoDias; i++) {
     archInvestmentAmount *= 1 + dailyArchRate;
-    archInvestmentAmount += monthlyIncome / approximateDaysPerMonth;
+    if ((i + 1) % approximateDaysPerMonth === 0) {
+      archInvestmentAmount += monthlyIncome;
+    }
   }
 
   selicResult.value = selicInvestmentAmount;
