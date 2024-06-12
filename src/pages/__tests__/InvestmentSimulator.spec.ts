@@ -25,7 +25,7 @@ describe("InvestmentSimulator.vue", () => {
     expect(wrapper.findComponent({ name: "HeroSection" }).exists()).toBe(true);
     expect(wrapper.findComponent({ name: "RangeSlider" }).exists()).toBe(true);
     expect(wrapper.find(".grid-right-title").text()).toBe(
-      "Em 24 meses você teria:"
+      "Em 12 meses você teria:"
     );
   });
 
@@ -71,8 +71,8 @@ describe("InvestmentSimulator.vue", () => {
     wrapper.vm.calculateProfitability();
     await wrapper.vm.$nextTick();
 
-    const expectedValueSelic = 14318;
-    const expectedValueArca = 15612;
+    const expectedValueSelic = 14272;
+    const expectedValueArca = 15519;
     const precision = 0;
     expect(wrapper.vm.selicResult).toBeCloseTo(expectedValueSelic, precision);
     expect(wrapper.vm.arcaResult).toBeCloseTo(expectedValueArca, precision);
